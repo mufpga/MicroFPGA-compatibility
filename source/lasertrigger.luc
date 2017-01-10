@@ -1,0 +1,61 @@
+module lasertrigger (
+    input clk,  // clock
+    input rst,  // reset
+    input trig,
+    input seq[16],
+    input mod[3],
+    input dura[16],
+    output lasersignal
+  ) {
+ 
+  const OFF = 0;
+  const ON = 1;
+  const RISING = 2;
+  const FALLING = 3;
+  const FOLLOW = 4;
+    
+ .clk(clk){ 
+    .rst(rst) {
+      dff sig_sync[2];
+      dff sig_old;
+      dff count_sig[22];
+      dff count_seq[4];
+  }}
+  
+  always {
+    sig_sync.d[0] = trig;
+    sig_sync.d[1] = sig_sync.q[0];
+    sig_old.d = sig_sync.q[1];
+    
+    if (!&count_sig.q){ 
+      count_sig.d = count_sig.q + 1;
+    }
+    
+    case(mod){
+      OFF:
+        lasersignal = 0;
+      ON:
+        lasersignal = 1;
+      RISING:
+        if(sig_old.q == 0 &&  sig_sync.q[1] == 1){
+            count_sig.d = 0;
+            count_seq.d = count_seq.q + 1;
+        }
+        lasersignal = (sig_sync.q[1] && seq[count_seq.q]) && count_sig.q<200000;
+      FALLING:
+        if(sig_old.q == 1 &&  sig_sync.q[1] == 0){
+            count_sig.d = 0;
+            count_seq.d = count_seq.q + 1;
+        }
+        if(seq[count_seq.q]){
+          lasersignal = count_sig.q<200000;
+        } else {
+          lasersignal = 0;
+        }
+      FOLLOW:
+        lasersignal = sig_sync.q[1];
+      default:
+        lasersignal = sig_sync.q[1];
+    }
+  }
+}

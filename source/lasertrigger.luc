@@ -58,9 +58,10 @@ module lasertrigger (
           lasersignal = 0;
         }
       FOLLOW:
-        lasersignal = sig_sync.q[1];
-      default:
-        lasersignal = sig_sync.q[1];
+        if(sig_old.q == 0 &&  sig_sync.q[1] == 1){
+            count_seq.d = count_seq.q + 1;
+        }
+        lasersignal = (sig_sync.q[1] && seq[count_seq.q]);
     }
   }
 }

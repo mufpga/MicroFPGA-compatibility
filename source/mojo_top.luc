@@ -15,7 +15,11 @@ module mojo_top (
     output laser1,
     output laser2,
     output laser3,
-    output laser4
+    output laser4,
+    output ttl1,
+    output ttl2,
+    output ttl3,
+    output ttl4
   ) {
    
   sig rst;                  // reset signal
@@ -38,6 +42,8 @@ module mojo_top (
       dff sequence[4][16];
       dff duration[4][16];
       dff mode[4][3];
+      
+      dff ttl[4];
     }
   }
 
@@ -95,7 +101,15 @@ module mojo_top (
           mode.d[3] = reg.regOut.data[2:0];  
         } else if (reg.regOut.address == 11) {    
           duration.d[3] = reg.regOut.data[15:0];  
-        }  
+        } else if (reg.regOut.address == 12){
+          ttl.d[0] = reg.regOut.data[0];
+        } else if (reg.regOut.address == 13){
+          ttl.d[1] = reg.regOut.data[0];
+        } else if (reg.regOut.address == 14){
+          ttl.d[2] = reg.regOut.data[0];
+        } else if (reg.regOut.address == 15){
+          ttl.d[3] = reg.regOut.data[0];
+        }
       } else {                            // if read
      
       }
@@ -126,6 +140,12 @@ module mojo_top (
     laser2 = l2.lasersignal;
     laser3 = l3.lasersignal;
     laser4 = l4.lasersignal;
+    
+    //////////////// TTLs
+    ttl1 = ttl.q[0];
+    ttl2 = ttl.q[1];
+    ttl3 = ttl.q[2];
+    ttl4 = ttl.q[3];
     
     led = 0;                         // connect the dff
   }

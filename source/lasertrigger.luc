@@ -13,6 +13,9 @@ module lasertrigger (
   const RISING = 2;
   const FALLING = 3;
   const FOLLOW = 4;
+  
+  const NM_CYCLES = 50;
+  var plength;
     
  .clk(clk){ 
     .rst(rst) {
@@ -23,6 +26,8 @@ module lasertrigger (
   }}
   
   always {
+    plength = dura*NM_CYCLES;
+    
     sig_sync.d[0] = trig;
     sig_sync.d[1] = sig_sync.q[0];
     sig_old.d = sig_sync.q[1];
@@ -41,14 +46,14 @@ module lasertrigger (
             count_sig.d = 0;
             count_seq.d = count_seq.q + 1;
         }
-        lasersignal = (sig_sync.q[1] && seq[count_seq.q]) && count_sig.q<200000;
+        lasersignal = (sig_sync.q[1] && seq[count_seq.q]) && count_sig.q<plength;
       FALLING:
         if(sig_old.q == 1 &&  sig_sync.q[1] == 0){
             count_sig.d = 0;
             count_seq.d = count_seq.q + 1;
         }
         if(seq[count_seq.q]){
-          lasersignal = count_sig.q<200000;
+          lasersignal = count_sig.q<plength;
         } else {
           lasersignal = 0;
         }

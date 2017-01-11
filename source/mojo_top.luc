@@ -34,6 +34,10 @@ module mojo_top (
       avr_interface avr;
       reg_interface reg;
        
+      // adc
+      analogreader adc;
+            
+      // lasers
       lasertrigger l1;
       lasertrigger l2;
       lasertrigger l3;
@@ -43,6 +47,7 @@ module mojo_top (
       dff duration[4][16];
       dff mode[4][3];
       
+      // ttls
       dff ttl[4];
     }
   }
@@ -57,14 +62,19 @@ module mojo_top (
     avr.spi_mosi = spi_mosi;
     avr.spi_sck = spi_sck;
     avr.rx = avr_tx;
-    avr.channel = hf;           // ADC is unused so disable
     avr.tx_block = avr_rx_busy; // block TX when AVR is busy
      
     // connect outputs of avr
     spi_miso = avr.spi_miso;
     spi_channel = avr.spi_channel;
     avr_rx = avr.tx;
-     
+    
+    // connect adc to avr avr_interface
+    avr.channel = adc.channel;
+    adc.sample = avr.sample;
+    adc.sample_channel = avr.sample_channel;
+    adc.new_sample = avr.new_sample;
+    
     // connect reg interface to avr interface
     reg.rx_data = avr.rx_data;
     reg.new_rx_data = avr.new_rx_data;
@@ -101,17 +111,41 @@ module mojo_top (
           mode.d[3] = reg.regOut.data[2:0];  
         } else if (reg.regOut.address == 11) {    
           duration.d[3] = reg.regOut.data[15:0];  
-        } else if (reg.regOut.address == 12){
+        } else if (reg.regOut.address == 12){           // ttl1
           ttl.d[0] = reg.regOut.data[0];
-        } else if (reg.regOut.address == 13){
+        } else if (reg.regOut.address == 13){           // ttl2
           ttl.d[1] = reg.regOut.data[0];
-        } else if (reg.regOut.address == 14){
+        } else if (reg.regOut.address == 14){           // ttl3
           ttl.d[2] = reg.regOut.data[0];
-        } else if (reg.regOut.address == 15){
+        } else if (reg.regOut.address == 15){           // ttl4
           ttl.d[3] = reg.regOut.data[0];
         }
-      } else {                            // if read
-     
+      } else { 
+        if (reg.regOut.address == 0) {    
+          reg.regIn.data = adc.value[0];        
+          reg.regIn.drdy = 1;             
+        } else if (reg.regOut.address == 1) {    
+          reg.regIn.data = adc.value[1];        
+          reg.regIn.drdy = 1;             
+        } else if (reg.regOut.address == 2) {    
+          reg.regIn.data = adc.value[2];        
+          reg.regIn.drdy = 1;             
+        } else if (reg.regOut.address == 3) {    
+          reg.regIn.data = adc.value[3];        
+          reg.regIn.drdy = 1;             
+        } else if (reg.regOut.address == 4) {    
+          reg.regIn.data = adc.value[4];        
+          reg.regIn.drdy = 1;             
+        } else if (reg.regOut.address == 5) {    
+          reg.regIn.data = adc.value[5];        
+          reg.regIn.drdy = 1;             
+        } else if (reg.regOut.address == 6) {    
+          reg.regIn.data = adc.value[6];        
+          reg.regIn.drdy = 1;             
+        } else if (reg.regOut.address == 7) {    
+          reg.regIn.data = adc.value[7];        
+          reg.regIn.drdy = 1;             
+        }
       }
     }
     
@@ -147,6 +181,6 @@ module mojo_top (
     ttl3 = ttl.q[2];
     ttl4 = ttl.q[3];
     
-    led = 0;                         // connect the dff
+    led = 0;
   }
 }

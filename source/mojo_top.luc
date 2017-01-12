@@ -42,10 +42,7 @@ module mojo_top (
       analogreader adc;
             
       // lasers
-      lasertrigger l1;
-      lasertrigger l2;
-      lasertrigger l3;
-      lasertrigger l4;
+      lasertrigger l[4];
       
       dff sequence[4][16];
       dff duration[4][16];
@@ -55,10 +52,7 @@ module mojo_top (
       dff ttl[4];
       
       // servos
-      servo servo_controller1(#RESOLUTION(16));
-      servo servo_controller2(#RESOLUTION(16));
-      servo servo_controller3(#RESOLUTION(16));
-      servo servo_controller4(#RESOLUTION(16));
+      servo servo_controller[4](#RESOLUTION(16));
       dff position[4][16];
     }
   }
@@ -133,11 +127,11 @@ module mojo_top (
           ttl.d[3] = reg.regOut.data[0];
         } else if (reg.regOut.address == 16){           // Servo1
           position.d[0] = reg.regOut.data[15:0];
-        } else if (reg.regOut.address == 16){           // Servo2
+        } else if (reg.regOut.address == 17){           // Servo2
           position.d[1] = reg.regOut.data[15:0];
-        } else if (reg.regOut.address == 16){           // Servo3
+        } else if (reg.regOut.address == 18){           // Servo3
           position.d[2] = reg.regOut.data[15:0];
-        } else if (reg.regOut.address == 16){           // Servo4
+        } else if (reg.regOut.address == 19){           // Servo4
           position.d[3] = reg.regOut.data[15:0];
         }
       } else { 
@@ -170,30 +164,15 @@ module mojo_top (
     }
     
     ///////////////// Lasers
-    l1.trig = camera;
-    l1.seq = sequence.q[0];
-    l1.mod = mode.q[0];
-    l1.dura = duration.q[0];
+    l.trig = 4x{camera};
+    l.seq = sequence.q;
+    l.mod = mode.q;
+    l.dura = duration.q;
     
-    l2.trig = camera;
-    l2.seq = sequence.q[1];
-    l2.mod = mode.q[1];
-    l2.dura = duration.q[1];
-    
-    l3.trig = camera;
-    l3.seq = sequence.q[2];
-    l3.mod = mode.q[2];
-    l3.dura = duration.q[2];
-    
-    l4.trig = camera;
-    l4.seq = sequence.q[3];
-    l4.mod = mode.q[3];
-    l4.dura = duration.q[3];
-    
-    laser1 = l1.lasersignal;
-    laser2 = l2.lasersignal;
-    laser3 = l3.lasersignal;
-    laser4 = l4.lasersignal;
+    laser1 = l.lasersignal[0];
+    laser2 = l.lasersignal[1];
+    laser3 = l.lasersignal[2];
+    laser4 = l.lasersignal[3];
     
     //////////////// TTLs
     ttl1 = ttl.q[0];
@@ -202,14 +181,11 @@ module mojo_top (
     ttl4 = ttl.q[3];
     
     //////////////// Servos
-    servo_controller1.position = position.q[0];
-    servo1 = servo_controller1.servo;
-    servo_controller2.position = position.q[1];
-    servo2 = servo_controller2.servo;
-    servo_controller3.position = position.q[2];
-    servo3 = servo_controller3.servo;
-    servo_controller4.position = position.q[3];
-    servo4 = servo_controller4.servo;
+    servo_controller.position = position.q;
+    servo1 = servo_controller.servo[0];
+    servo2 = servo_controller.servo[1];
+    servo3 = servo_controller.servo[2];
+    servo4 = servo_controller.servo[3];
     
     led = 0;
   }

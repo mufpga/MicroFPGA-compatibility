@@ -14,6 +14,5 @@
     <component>uart_tx.luc</component>
     <component>avr_interface.luc</component>
     <component>servo.luc</component>
-    <component>counter.luc</component>
   </files>
 </project>

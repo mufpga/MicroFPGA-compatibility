@@ -19,7 +19,11 @@ module mojo_top (
     output ttl1,
     output ttl2,
     output ttl3,
-    output ttl4
+    output ttl4,
+    output servo1,
+    output servo2,
+    output servo3,
+    output servo4
   ) {
    
   sig rst;                  // reset signal
@@ -49,6 +53,13 @@ module mojo_top (
       
       // ttls
       dff ttl[4];
+      
+      // servos
+      servo servo_controller1(#RESOLUTION(16));
+      servo servo_controller2(#RESOLUTION(16));
+      servo servo_controller3(#RESOLUTION(16));
+      servo servo_controller4(#RESOLUTION(16));
+      dff position[4][16];
     }
   }
 
@@ -83,7 +94,8 @@ module mojo_top (
     reg.tx_busy = avr.tx_busy;
      
     reg.regIn.drdy = 0;                   // default to not ready
-    reg.regIn.data = 32bx;                // don't care
+    reg.regIn.data = 32bx;                // don't care 
+    
      
     if (reg.regOut.new_cmd) {             // new command
       if (reg.regOut.write) {             // if write
@@ -119,30 +131,38 @@ module mojo_top (
           ttl.d[2] = reg.regOut.data[0];
         } else if (reg.regOut.address == 15){           // ttl4
           ttl.d[3] = reg.regOut.data[0];
+        } else if (reg.regOut.address == 16){           // Servo1
+          position.d[0] = reg.regOut.data[15:0];
+        } else if (reg.regOut.address == 16){           // Servo2
+          position.d[1] = reg.regOut.data[15:0];
+        } else if (reg.regOut.address == 16){           // Servo3
+          position.d[2] = reg.regOut.data[15:0];
+        } else if (reg.regOut.address == 16){           // Servo4
+          position.d[3] = reg.regOut.data[15:0];
         }
       } else { 
-        if (reg.regOut.address == 0) {    
+        if (reg.regOut.address == 0) {                  // A0    
           reg.regIn.data = adc.value[0];        
           reg.regIn.drdy = 1;             
-        } else if (reg.regOut.address == 1) {    
+        } else if (reg.regOut.address == 1) {           // A1
           reg.regIn.data = adc.value[1];        
           reg.regIn.drdy = 1;             
-        } else if (reg.regOut.address == 2) {    
+        } else if (reg.regOut.address == 2) {           // A4    
           reg.regIn.data = adc.value[2];        
           reg.regIn.drdy = 1;             
-        } else if (reg.regOut.address == 3) {    
+        } else if (reg.regOut.address == 3) {           // A5    
           reg.regIn.data = adc.value[3];        
           reg.regIn.drdy = 1;             
-        } else if (reg.regOut.address == 4) {    
+        } else if (reg.regOut.address == 4) {           // A6   
           reg.regIn.data = adc.value[4];        
           reg.regIn.drdy = 1;             
-        } else if (reg.regOut.address == 5) {    
+        } else if (reg.regOut.address == 5) {           // A7    
           reg.regIn.data = adc.value[5];        
           reg.regIn.drdy = 1;             
-        } else if (reg.regOut.address == 6) {    
+        } else if (reg.regOut.address == 6) {           // A8    
           reg.regIn.data = adc.value[6];        
           reg.regIn.drdy = 1;             
-        } else if (reg.regOut.address == 7) {    
+        } else if (reg.regOut.address == 7) {           // A9    
           reg.regIn.data = adc.value[7];        
           reg.regIn.drdy = 1;             
         }
@@ -180,6 +200,16 @@ module mojo_top (
     ttl2 = ttl.q[1];
     ttl3 = ttl.q[2];
     ttl4 = ttl.q[3];
+    
+    //////////////// Servos
+    servo_controller1.position = position.q[0];
+    servo1 = servo_controller1.servo;
+    servo_controller2.position = position.q[1];
+    servo2 = servo_controller2.servo;
+    servo_controller3.position = position.q[2];
+    servo3 = servo_controller3.servo;
+    servo_controller4.position = position.q[3];
+    servo4 = servo_controller4.servo;
     
     led = 0;
   }

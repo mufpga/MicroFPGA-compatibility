@@ -101,30 +101,31 @@ module mojo_top (
      
     if (reg.regOut.new_cmd) {             // new command
       if (reg.regOut.write) {             // if write
-        if (reg.regOut.address == 0) {                  // laser1
-          sequence.d[0] = reg.regOut.data[15:0];  
+        led = 200;
+        if (reg.regOut.address == 0) {                  // Laser modes  
+          mode.d[0] = reg.regOut.data[2:0];   
         } else if (reg.regOut.address == 1) {    
-          mode.d[0] = reg.regOut.data[2:0];  
-        } else if (reg.regOut.address == 2) {    
-          duration.d[0] = reg.regOut.data[15:0];  
-        } else if (reg.regOut.address == 3) {    
-          sequence.d[1] = reg.regOut.data[15:0];        // laser2 
-        } else if (reg.regOut.address == 4) {    
           mode.d[1] = reg.regOut.data[2:0];  
-        } else if (reg.regOut.address == 5) {    
-          duration.d[1] = reg.regOut.data[15:0];  
-        } else if (reg.regOut.address == 6) {    
-          sequence.d[2] = reg.regOut.data[15:0];        // laser3
-        } else if (reg.regOut.address == 7) {    
-          mode.d[2] = reg.regOut.data[2:0];  
-        } else if (reg.regOut.address == 8) {    
-          duration.d[2] = reg.regOut.data[15:0];  
-        } else if (reg.regOut.address == 9) {    
-          sequence.d[3] = reg.regOut.data[15:0];        // laser4  
-        } else if (reg.regOut.address == 10) {    
-          mode.d[3] = reg.regOut.data[2:0];  
-        } else if (reg.regOut.address == 11) {    
-          duration.d[3] = reg.regOut.data[15:0];  
+        } else if (reg.regOut.address == 2) {      
+          mode.d[2] = reg.regOut.data[2:0];   
+        } else if (reg.regOut.address == 3) {         
+          mode.d[3] = reg.regOut.data[2:0];         
+        } else if (reg.regOut.address == 4) {  
+          duration.d[0] = reg.regOut.data[15:0];        // Laser duration 
+        } else if (reg.regOut.address == 5) {     
+          duration.d[1] = reg.regOut.data[15:0]; 
+        } else if (reg.regOut.address == 6) {   
+          duration.d[2] = reg.regOut.data[15:0];        
+        } else if (reg.regOut.address == 7) {   
+          duration.d[3] = reg.regOut.data[15:0];   
+        } else if (reg.regOut.address == 8) {     
+          sequence.d[0] = reg.regOut.data[15:0];        // Laser sequence   
+        } else if (reg.regOut.address == 9) {     
+          sequence.d[1] = reg.regOut.data[15:0];          
+        } else if (reg.regOut.address == 10) {   
+          sequence.d[2] = reg.regOut.data[15:0];
+        } else if (reg.regOut.address == 11) {      
+          sequence.d[3] = reg.regOut.data[15:0];
         } else if (reg.regOut.address == 12){           // ttl1
           ttl.d[0] = reg.regOut.data[0];
         } else if (reg.regOut.address == 13){           // ttl2
@@ -149,6 +150,7 @@ module mojo_top (
           pwmupdate.d[1] = 1;
         }
       } else { 
+        led = 10;
         if (reg.regOut.address == 0) {                  // A0    
           reg.regIn.data = adc.value[0];        
           reg.regIn.drdy = 1;             
@@ -172,6 +174,10 @@ module mojo_top (
           reg.regIn.drdy = 1;             
         } else if (reg.regOut.address == 7) {           // A9    
           reg.regIn.data = adc.value[7];        
+          reg.regIn.drdy = 1;             
+        }else if (reg.regOut.address == 99) {           // Version    
+          led = 15;
+          reg.regIn.data = 1;        
           reg.regIn.drdy = 1;             
         }
       }
@@ -206,7 +212,5 @@ module mojo_top (
     pulsewm.value = dutycycle.q;
     pwm1 = pulsewm.pulse[0];
     pwm2 = pulsewm.pulse[1];
-    
-    led = 0;
   }
 }

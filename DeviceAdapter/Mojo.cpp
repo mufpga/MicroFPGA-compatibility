@@ -34,7 +34,7 @@ const int g_version = 1;
 const int g_maxlasers = 4;
 const int g_maxanaloginput = 8;
 const int g_maxttl = 4;
-const int g_maxpwm = 2;
+const int g_maxpwm = 4;
 const int g_maxservos = 4;
 
 const int g_offsetaddressLaserMode = 0;
@@ -906,7 +906,7 @@ MojoPWM::MojoPWM() :
 
    // Number of lasers
    CPropertyAction* pAct = new CPropertyAction(this, &MojoPWM::OnNumberOfChannels);
-   CreateProperty("Number of PMW", "2", MM::Integer, false, pAct, true);
+   CreateProperty("Number of PMW", "4", MM::Integer, false, pAct, true);
    SetPropertyLimits("Number of PMW", 0, g_maxpwm);
 }
 

@@ -25,7 +25,9 @@ module mojo_top (
     output servo3,
     output servo4,
     output pwm1,
-    output pwm2
+    output pwm2,
+    output pwm3,
+    output pwm4
   ) {
    
   sig rst;                  // reset signal
@@ -58,9 +60,9 @@ module mojo_top (
       dff position[4][16];
       
       // pwm
-      pwm pulsewm[2](#TOP(254),#DIV(9),#WIDTH(8));
-      dff dutycycle[2][8];
-      dff pwmupdate[2];
+      pwm pulsewm[4](#TOP(254),#DIV(9),#WIDTH(8));
+      dff dutycycle[4][8];
+      dff pwmupdate[4];
     }
   }
 
@@ -148,6 +150,12 @@ module mojo_top (
         } else if (reg.regOut.address == 21){           // PWM2
           dutycycle.d[1] = reg.regOut.data[7:0];
           pwmupdate.d[1] = 1;
+        }else if (reg.regOut.address == 22){           // PWM3
+          dutycycle.d[2] = reg.regOut.data[7:0];
+          pwmupdate.d[2] = 1;
+        }else if (reg.regOut.address == 23){           // PWM4
+          dutycycle.d[3] = reg.regOut.data[7:0];
+          pwmupdate.d[3] = 1;
         }
       } else { 
         led = 10;
@@ -212,5 +220,7 @@ module mojo_top (
     pulsewm.value = dutycycle.q;
     pwm1 = pulsewm.pulse[0];
     pwm2 = pulsewm.pulse[1];
+    pwm3 = pulsewm.pulse[2];
+    pwm4 = pulsewm.pulse[3];
   }
 }

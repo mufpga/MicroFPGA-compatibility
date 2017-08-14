@@ -5,6 +5,7 @@ module lasertrigger (
     input seq[16],
     input mod[3],
     input dura[16],
+    input sync[4],
     output lasersignal
   ) {
  
@@ -22,7 +23,6 @@ module lasertrigger (
       dff sig_sync[2];
       dff sig_old;
       dff count_sig[22];
-      dff count_seq[4];
   }}
   
   always {
@@ -36,6 +36,8 @@ module lasertrigger (
       count_sig.d = count_sig.q + 1;
     }
     
+    lasersignal=0;
+    
     case(mod){
       OFF:
         lasersignal = 0;
@@ -44,24 +46,15 @@ module lasertrigger (
       RISING:
         if(sig_old.q == 0 &&  sig_sync.q[1] == 1){
             count_sig.d = 0;
-            count_seq.d = count_seq.q + 1;
         }
-        lasersignal = (sig_sync.q[1] && seq[count_seq.q]) && count_sig.q<plength;
+        lasersignal = (sig_sync.q[1] && seq[sync]) && count_sig.q<plength;
       FALLING:
         if(sig_old.q == 1 &&  sig_sync.q[1] == 0){
             count_sig.d = 0;
-            count_seq.d = count_seq.q + 1;
         }
-        if(seq[count_seq.q]){
-          lasersignal = count_sig.q<plength;
-        } else {
-          lasersignal = 0;
-        }
+        lasersignal = (!sig_sync.q[1] && seq[sync]) && count_sig.q<plength;
       FOLLOW:
-        if(sig_old.q == 0 &&  sig_sync.q[1] == 1){
-            count_seq.d = count_seq.q + 1;
-        }
-        lasersignal = (sig_sync.q[1] && seq[count_seq.q]);
+        lasersignal = (sig_sync.q[1] && seq[sync]);
     }
   }
 }

@@ -47,6 +47,7 @@ module mojo_top (
             
       // lasers
       lasertrigger l[4];
+      cam_synchro camsync;
       
       dff sequence[4][16];
       dff duration[4][16];
@@ -192,10 +193,16 @@ module mojo_top (
     }
     
     ///////////////// Lasers
+    camsync.camera = camera;
     l.trig = 4x{camera};
     l.seq = sequence.q;
     l.mod = mode.q;
     l.dura = duration.q;
+    
+    l.sync[0] = camsync.sync;
+    l.sync[1] = camsync.sync;
+    l.sync[2] = camsync.sync;
+    l.sync[3] = camsync.sync;
     
     laser1 = l.lasersignal[0];
     laser2 = l.lasersignal[1];

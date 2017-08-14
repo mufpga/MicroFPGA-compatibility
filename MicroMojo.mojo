@@ -3,6 +3,7 @@
   <files>
     <src>lasertrigger.luc</src>
     <src>analogreader.luc</src>
+    <src>cam_synchro.luc</src>
     <src top="true">mojo_top.luc</src>
     <ucf>user.ucf</ucf>
     <ucf lib="true">mojo.ucf</ucf>

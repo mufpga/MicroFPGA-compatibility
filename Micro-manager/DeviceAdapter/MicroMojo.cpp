@@ -43,7 +43,7 @@ const int g_offsetaddressLaserSequence = 20;
 const int g_offsetaddressTTL = 30;
 const int g_offsetaddressServo = 40;
 const int g_offsetaddressPWM = 50;
-const int g_offsetaddressAnalogInput = 0;
+const int g_offsetaddressAnalogInput = 60;
 
 const int g_address_version = 100;
 
@@ -507,8 +507,24 @@ int MojoLaserTrig::OnMode(MM::PropertyBase* pProp, MM::ActionType pAct, long las
 {
 	if (pAct == MM::BeforeGet)
 	{
-		// use cached state
-		pProp->Set(mode_[laser]);
+		MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
+		if (!hub){
+			return ERR_NO_PORT_SET;
+		}
+
+		MMThreadGuard myLock(hub->GetLock());
+
+		int ret = hub->SendReadRequest(g_offsetaddressLaserMode+laser);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		long answer;
+		ret = ReadFromPort(answer);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		pProp->Set(answer);
+		mode_[laser]=answer;
 	}
 	else if (pAct == MM::AfterSet)
 	{
@@ -529,8 +545,24 @@ int MojoLaserTrig::OnDuration(MM::PropertyBase* pProp, MM::ActionType pAct, long
 {
 	if (pAct == MM::BeforeGet)
 	{
-		// use cached state
-		pProp->Set(duration_[laser]);
+		MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
+		if (!hub){
+			return ERR_NO_PORT_SET;
+		}
+
+		MMThreadGuard myLock(hub->GetLock());
+
+		int ret = hub->SendReadRequest(g_offsetaddressLaserDuration+laser);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		long answer;
+		ret = ReadFromPort(answer);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		pProp->Set(answer);
+		duration_[laser]=answer;
 	}
 	else if (pAct == MM::AfterSet)
 	{
@@ -551,8 +583,24 @@ int MojoLaserTrig::OnSequence(MM::PropertyBase* pProp, MM::ActionType pAct, long
 {
 	if (pAct == MM::BeforeGet)
 	{
-		// use cached state
-		pProp->Set(sequence_[laser]);
+		MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
+		if (!hub){
+			return ERR_NO_PORT_SET;
+		}
+
+		MMThreadGuard myLock(hub->GetLock());
+
+		int ret = hub->SendReadRequest(g_offsetaddressLaserSequence+laser);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		long answer;
+		ret = ReadFromPort(answer);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		pProp->Set(answer);
+		sequence_[laser]=answer;
 	}
 	else if (pAct == MM::AfterSet)
 	{
@@ -708,8 +756,24 @@ int MojoTTL::OnState(MM::PropertyBase* pProp, MM::ActionType pAct, long channel)
 {
 	if (pAct == MM::BeforeGet)
 	{
-		// use cached state
-		pProp->Set(state_[channel]);
+		MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
+		if (!hub){
+			return ERR_NO_PORT_SET;
+		}
+
+		MMThreadGuard myLock(hub->GetLock());
+
+		int ret = hub->SendReadRequest(g_offsetaddressTTL+channel);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		long answer;
+		ret = ReadFromPort(answer);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		pProp->Set(answer);
+		state_[channel]=answer;
 	}
 	else if (pAct == MM::AfterSet)
 	{
@@ -862,8 +926,25 @@ int MojoServo::OnPosition(MM::PropertyBase* pProp, MM::ActionType pAct, long ser
 {
 	if (pAct == MM::BeforeGet)
 	{
-		// use cached state
-		pProp->Set(position_[servo]);
+		MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
+		if (!hub){
+			return ERR_NO_PORT_SET;
+		}
+
+		MMThreadGuard myLock(hub->GetLock());
+
+		int ret = hub->SendReadRequest(g_offsetaddressServo+servo);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		long answer;
+		ret = ReadFromPort(answer);
+		if (ret != DEVICE_OK)
+			return ret;
+
+
+		pProp->Set(answer);
+		position_[servo]=answer;
 	}
 	else if (pAct == MM::AfterSet)
 	{
@@ -1013,8 +1094,24 @@ int MojoPWM::OnState(MM::PropertyBase* pProp, MM::ActionType pAct, long channel)
 {
 	if (pAct == MM::BeforeGet)
 	{
-		// use cached state
-		pProp->Set(state_[channel]);
+		MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
+		if (!hub){
+			return ERR_NO_PORT_SET;
+		}
+
+		MMThreadGuard myLock(hub->GetLock());
+
+		int ret = hub->SendReadRequest(g_offsetaddressPWM+channel);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		long answer;
+		ret = ReadFromPort(answer);
+		if (ret != DEVICE_OK)
+			return ret;
+
+		pProp->Set(answer);
+		state_[channel]=answer;
 	}
 	else if (pAct == MM::AfterSet)
 	{

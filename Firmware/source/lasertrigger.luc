@@ -47,14 +47,14 @@ module lasertrigger (
         if(sig_old.q == 0 &&  sig_sync.q[1] == 1){
             count_sig.d = 0;
         }
-        lasersignal = (sig_sync.q[1] && seq[sync]) && count_sig.q<plength;
+        lasersignal = (sig_sync.q[1] && seq[15-sync]) && count_sig.q<plength;
       FALLING:
         if(sig_old.q == 1 &&  sig_sync.q[1] == 0){
             count_sig.d = 0;
         }
-        lasersignal = (!sig_sync.q[1] && seq[sync]) && count_sig.q<plength;
+        lasersignal = (!sig_sync.q[1] && seq[15-sync]) && count_sig.q<plength;
       FOLLOW:
-        lasersignal = (sig_sync.q[1] && seq[sync]);
+        lasersignal = (sig_sync.q[1] && seq[15-sync]);
     }
   }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="MicroMojo" board="Mojo V3" language="Lucid">
+<project name="MicroMojo2" board="Mojo V3" language="Lucid">
   <files>
     <src>lasertrigger.luc</src>
     <src>analogreader.luc</src>

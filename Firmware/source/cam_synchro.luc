@@ -22,7 +22,7 @@ module cam_synchro (
       sync_count.d = sync_count.q+1;
     }
     
-     sync = sync_count.q;
+    sync = sync_count.q; 
     
   }
 }

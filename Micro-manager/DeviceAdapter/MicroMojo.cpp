@@ -106,8 +106,7 @@ MODULE_API void DeleteDevice(MM::Device* pDevice)
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 MojoHub::MojoHub() :
-initialized_ (false),
-	version_(g_version)
+	initialized_ (false)
 {
 	portAvailable_ = false;
 
@@ -213,13 +212,14 @@ int MojoHub::Initialize()
 		return ret;
 
 	// Verify that the version of the firmware and adapter match
-	if (g_version != version_)
+	if (g_version != version_){
 		return ERR_VERSION_MISMATCH;
+	}
 
 	CPropertyAction* pAct = new CPropertyAction(this, &MojoHub::OnVersion);
 	std::ostringstream sversion;
 	sversion << version_;
-	CreateProperty("MicroMojo Version", sversion.str().c_str(), MM::Integer, true, pAct);
+	CreateProperty("MicroMojo version", sversion.str().c_str(), MM::Integer, true, pAct);
 
 	initialized_ = true;
 	return DEVICE_OK;
@@ -375,9 +375,6 @@ initialized_ (false),
 	ret = CreateProperty(MM::g_Keyword_Name, g_DeviceNameMojoLaserTrig, MM::String, true);
 	assert(DEVICE_OK == ret);
 
-	// parent ID display
-	CreateHubIDProperty();
-
 	// Number of lasers
 	CPropertyAction* pAct = new CPropertyAction(this, &MojoLaserTrig::OnNumberOfLasers);
 	CreateProperty("Number of lasers", "4", MM::Integer, false, pAct, true);
@@ -398,13 +395,15 @@ void MojoLaserTrig::GetName(char* name) const
 
 int MojoLaserTrig::Initialize()
 {
+	// Parent ID display	
 	MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
 	if (!hub) {
 		return ERR_NO_PORT_SET;
 	}
 	char hubLabel[MM::MaxStrLength];
 	hub->GetLabel(hubLabel);
-	SetParentID(hubLabel); // for backward comp.
+	SetParentID(hubLabel);
+	CreateHubIDProperty();
 
 	// Allocate memory for lasers
 	mode_ = new long [GetNumberOfLasers()];
@@ -591,10 +590,7 @@ initialized_ (false),
 	ret = CreateProperty(MM::g_Keyword_Name, g_DeviceNameMojoTTL, MM::String, true);
 	assert(DEVICE_OK == ret);
 
-	// parent ID display
-	CreateHubIDProperty();
-
-	// Number of lasers
+	// Number of TTL channels
 	CPropertyAction* pAct = new CPropertyAction(this, &MojoTTL::OnNumberOfChannels);
 	CreateProperty("Number of channels", "4", MM::Integer, false, pAct, true);
 	SetPropertyLimits("Number of channels", 1, g_maxttl);
@@ -613,6 +609,7 @@ void MojoTTL::GetName(char* name) const
 
 int MojoTTL::Initialize()
 {
+	// Parent ID display	
 	MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
 	if (!hub) {
 		return ERR_NO_PORT_SET;
@@ -620,9 +617,7 @@ int MojoTTL::Initialize()
 	char hubLabel[MM::MaxStrLength];
 	hub->GetLabel(hubLabel);
 	SetParentID(hubLabel);
-
-	// set property list
-	// -----------------
+	CreateHubIDProperty();
 
 	// State
 	// -----
@@ -752,10 +747,7 @@ initialized_ (false),
 	ret = CreateProperty(MM::g_Keyword_Name, g_DeviceNameMojoServos, MM::String, true);
 	assert(DEVICE_OK == ret);
 
-	// parent ID display
-	CreateHubIDProperty();
-
-	// Number of lasers
+	// Number of servos
 	CPropertyAction* pAct = new CPropertyAction(this, &MojoServo::OnNumberOfServos);
 	CreateProperty("Number of Servos", "4", MM::Integer, false, pAct, true);
 	SetPropertyLimits("Number of Servos", 1, g_maxservos);
@@ -774,16 +766,15 @@ void MojoServo::GetName(char* name) const
 
 int MojoServo::Initialize()
 {
+	// Parent ID display	
 	MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
 	if (!hub) {
 		return ERR_NO_PORT_SET;
 	}
 	char hubLabel[MM::MaxStrLength];
 	hub->GetLabel(hubLabel);
-	SetParentID(hubLabel); 
-
-	// set property list
-	// -----------------
+	SetParentID(hubLabel);
+	CreateHubIDProperty();
 
 	// State
 	// -----
@@ -909,10 +900,7 @@ initialized_ (false),
 	ret = CreateProperty(MM::g_Keyword_Name, g_DeviceNameMojoPWM, MM::String, true);
 	assert(DEVICE_OK == ret);
 
-	// parent ID display
-	CreateHubIDProperty();
-
-	// Number of lasers
+	// Number of PWM channels
 	CPropertyAction* pAct = new CPropertyAction(this, &MojoPWM::OnNumberOfChannels);
 	CreateProperty("Number of PWM", "1", MM::Integer, false, pAct, true);
 	SetPropertyLimits("Number of PWM", 1, g_maxpwm);
@@ -931,16 +919,15 @@ void MojoPWM::GetName(char* name) const
 
 int MojoPWM::Initialize()
 {
+	// Parent ID display	
 	MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
 	if (!hub) {
 		return ERR_NO_PORT_SET;
 	}
 	char hubLabel[MM::MaxStrLength];
 	hub->GetLabel(hubLabel);
-	SetParentID(hubLabel); 
-
-	// set property list
-	// -----------------
+	SetParentID(hubLabel);
+	CreateHubIDProperty();
 
 	// State
 	// -----
@@ -1067,10 +1054,7 @@ initialized_ (false)
 	ret = CreateProperty(MM::g_Keyword_Name, g_DeviceNameMojoInput, MM::String, true);
 	assert(DEVICE_OK == ret);
 
-	// parent ID display
-	CreateHubIDProperty();
-
-	// Number of lasers
+	// Number of Analog input channels
 	CPropertyAction* pAct = new CPropertyAction(this, &MojoInput::OnNumberOfChannels);
 	CreateProperty("Number of channels", "3", MM::Integer, false, pAct, true);
 	SetPropertyLimits("Number of channels", 1, g_maxanaloginput);
@@ -1093,6 +1077,7 @@ bool MojoInput::Busy()
 
 int MojoInput::Initialize()
 {
+	// Parent ID display	
 	MojoHub* hub = static_cast<MojoHub*>(GetParentHub());
 	if (!hub) {
 		return ERR_NO_PORT_SET;
@@ -1100,9 +1085,7 @@ int MojoInput::Initialize()
 	char hubLabel[MM::MaxStrLength];
 	hub->GetLabel(hubLabel);
 	SetParentID(hubLabel);
-
-	// set property list
-	// -----------------
+	CreateHubIDProperty();
 
 	// State
 	// -----

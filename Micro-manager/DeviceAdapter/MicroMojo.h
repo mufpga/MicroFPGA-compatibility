@@ -3,11 +3,11 @@
 // PROJECT:       Micro-Manager
 // SUBSYSTEM:     DeviceAdapters
 //-----------------------------------------------------------------------------
-// DESCRIPTION:   Adapter for Mojo board
+// DESCRIPTION:   Adapter for MojoFPGA board
 // COPYRIGHT:     EMBL
 // LICENSE:       LGPL
 //
-// AUTHOR:        Joran Deschamps
+// AUTHOR:        Joran Deschamps, EMBL, 2017
 //
 //
 
@@ -16,11 +16,6 @@
 
 #include "../../MMDevice/MMDevice.h"
 #include "../../MMDevice/DeviceBase.h"
-#include <string>
-#include <map>
-#include <iostream>
-#include <fstream>
-
 
 //////////////////////////////////////////////////////////////////////////////
 // Error codes

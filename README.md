@@ -22,7 +22,7 @@ For more details, please consult the wiki.
 
 # Micro-manager
 
-[Micro-manager] (https://micro-manager.org/ Micro-manager website) is an open-source microscope control software, with a large set of compatible commercial devices. The communication with each device is done through a so-called device adapter. MicroMojo device adapter offers the possibility to load the desired number of each signal controller (LaserTrigger, TTL, Servo, PWM, AnalogReadOut) in the software. 
+[Micro-manager](https://micro-manager.org/ "Micro-manager website") is an open-source microscope control software, with a large set of compatible commercial devices. The communication with each device is done through a so-called device adapter. MicroMojo device adapter offers the possibility to load the desired number of each signal controller (LaserTrigger, TTL, Servo, PWM, AnalogReadOut) in the software. 
 
 The device adapter needs to be compiled for a specific version of Micro-manager. Pre-compiled versions of the adapter will be made available for Micro-manager 1.14.23 and 2.
 

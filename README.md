@@ -32,7 +32,7 @@ The device adapter needs to be compiled for a specific version of Micro-manager.
 
 In addition, the MojoFPGA has a limited capacity in driving multiple servos at the same time. When using MicroMojo to control multiple servos, prefer supplying the driving voltage from a different source or supply an additional 5V power to the MojoFPGA.
 
-See the wiki for tips in wiring.
+See the [wiki](https://github.com/jdeschamps/MicroMojo/wiki) for tips in wiring.
 
 # Wiki
 

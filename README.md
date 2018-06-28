@@ -18,7 +18,7 @@ By design, MicroMojo offers out of the box several control signals useful in mic
 | PWM              | 0-100%      | Wiht a low-pass circuit: AOM %, laser % |
 | Analog read-out  | 8 analog read-out channels      | Sensor read-outs |
 
-For more details, please consult the wiki.
+For more details, please consult the [wiki](https://github.com/jdeschamps/MicroMojo/wiki).
 
 # Micro-manager
 
@@ -36,7 +36,7 @@ See the wiki for tips in wiring.
 
 # Wiki
 
-The wiki is currently under construction.
+The [wiki](https://github.com/jdeschamps/MicroMojo/wiki) is currently under construction.
 
 # Outlook
 

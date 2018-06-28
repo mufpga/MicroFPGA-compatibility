@@ -41,3 +41,6 @@ The wiki is currently under construction.
 # Outlook
 
 A standalone Java program to run MicroMojo is being developed, as well as Micro-manager plugin and LabView program.
+
+
+Joran Deschamps, EMBL, 2018

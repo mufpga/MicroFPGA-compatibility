@@ -24,7 +24,7 @@
 #define ERR_PORT_OPEN_FAILED 102
 #define ERR_NO_PORT_SET 103
 #define ERR_VERSION_MISMATCH 104
-#define ERR_COMMAND_UNKNOWN 65535
+#define ERR_COMMAND_UNKNOWN 38730
 
 
 class MojoHub : public HubBase<MojoHub>  

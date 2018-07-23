@@ -39,7 +39,7 @@ module mojo_top (
   ) {
   
   const ADDRESS_VERSION = 100;
-  const ERROR_UNKNOW_COMMAND = 65535;
+  const ERROR_UNKNOW_COMMAND = 38730;
   const NUM_INPUT = 8; // fixed by the board
   const NUM_LASERS = 6;
   const NUM_PWM = 6;

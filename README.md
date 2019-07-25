@@ -1,3 +1,6 @@
+Important: The Mojo FPGA have unfortunately been discontinued. Their successors are based on a slightly different architecture and we are working on adapting the code for the new generation (Au FPGA board, Alchitry).
+
+
 # MicroMojo
 
 MicroMojo is intended as a platform for the control of different elements on custom microscopes. It is based on a low-price [FPGA](https://en.wikipedia.org/wiki/Field-programmable_gate_array "Wikipedia") (Field-Programmable Gate Array) called the [Mojo](https://embeddedmicro.com/products/mojo-v3 "Mojo V3") (Embedded Micro). To facilitate the use of MicroMojo in microscopes, a device adapter for [Micro-manager](https://micro-manager.org/ "Micro-manager website") is available in addition to the firmware.

@@ -1,4 +1,4 @@
-Important: The Mojo FPGA have unfortunately been discontinued. Their successors are based on a slightly different architecture and we are working on adapting the code for the new generation (Au FPGA board, Alchitry).
+## :warning: Important: The Mojo FPGA has unfortunately been discontinued. Their successors are based on a slightly different architecture and we are working on adapting the code for the new generation.
 
 
 # MicroMojo

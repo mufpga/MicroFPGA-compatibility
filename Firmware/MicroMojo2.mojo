@@ -15,7 +15,8 @@
     <component>reset_conditioner.luc</component>
     <component>avr_interface.luc</component>
     <component>uart_tx.luc</component>
-    <component>servo.luc</component>
+    <component>servo_standard.luc</component>
+    <component>servo_stop.luc</component>
     <component>counter.luc</component>
   </files>
 </project>

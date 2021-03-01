@@ -73,8 +73,10 @@ module mojo_top (
       dff ttl[NUM_TTL];
       
       // servos
-      servo servo_controller[NUM_SERVOS](#RESOLUTION(16));
+      servo_standard servo_controller[NUM_SERVOS];
       dff position[NUM_SERVOS][16];
+      dff servo_sig_update[NUM_SERVOS];
+      servo_stop servo_sig[NUM_SERVOS];// to shut down the servos 10 sec after every movement
       
       // pwm
       pwm pulsewm[NUM_PWM](#TOP(254),#DIV(9),#WIDTH(8));
@@ -119,6 +121,7 @@ module mojo_top (
     reg.regIn.data = 32bx;                // don't care 
     
     pwmupdate.d = NUM_PWMx{0};
+    servo_sig_update.d = NUM_SERVOSx{0};
      
     if (reg.regOut.new_cmd) {             // new command
       if (reg.regOut.write) {             // if write
@@ -132,6 +135,7 @@ module mojo_top (
           ttl.d[reg.regOut.address-30] = reg.regOut.data[0];
         } else if (reg.regOut.address < 40+NUM_SERVOS){           // Servo
           position.d[reg.regOut.address-40] = reg.regOut.data[15:0];
+          servo_sig_update.d[reg.regOut.address-40] = 1;
         } else if (reg.regOut.address < 50+NUM_PWM){           // PWM
           dutycycle.d[reg.regOut.address-50] = reg.regOut.data[7:0];
           pwmupdate.d[reg.regOut.address-50] = 1;
@@ -194,12 +198,14 @@ module mojo_top (
     
     //////////////// Servos
     servo_controller.position = position.q;
-    servo1 = servo_controller.servo[0];
-    servo2 = servo_controller.servo[1];
-    servo3 = servo_controller.servo[2];
-    servo4 = servo_controller.servo[3];
-    servo5 = servo_controller.servo[4];
-    servo6 = servo_controller.servo[5];
+    servo_sig.update = servo_sig_update.q;
+    servo_sig.signal_in = servo_controller.servo;
+    servo1 = servo_sig.signal_out[0];
+    servo2 = servo_sig.signal_out[1];
+    servo3 = servo_sig.signal_out[2];
+    servo4 = servo_sig.signal_out[3];
+    servo5 = servo_sig.signal_out[4];
+    servo6 = servo_sig.signal_out[5];
     
     //////////////// PWM
     pulsewm.update = pwmupdate.q;

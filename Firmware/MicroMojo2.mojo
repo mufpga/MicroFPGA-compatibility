@@ -4,6 +4,8 @@
     <src>lasertrigger.luc</src>
     <src>analogreader.luc</src>
     <src>cam_synchro.luc</src>
+    <src>servo_standard.luc</src>
+    <src>servo_stop.luc</src>
     <src top="true">mojo_top.luc</src>
     <ucf>user.ucf</ucf>
     <ucf lib="true">mojo.ucf</ucf>
@@ -15,8 +17,6 @@
     <component>reset_conditioner.luc</component>
     <component>avr_interface.luc</component>
     <component>uart_tx.luc</component>
-    <component>servo_standard.luc</component>
-    <component>servo_stop.luc</component>
     <component>counter.luc</component>
   </files>
 </project>

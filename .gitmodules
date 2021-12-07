@@ -1,0 +1,3 @@
+[submodule "Micro-Manager/DeviceAdapter_v3"]
+	path = Micro-Manager/DeviceAdapter_v3
+	url = git@github.com:mufpga/MicroFPGA-mm.git

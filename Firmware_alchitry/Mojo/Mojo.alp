@@ -4,18 +4,19 @@
     <component>reset_conditioner.luc</component>
     <component>reg_interface.luc</component>
     <component>pwm.luc</component>
-    <component>uart_rx.luc</component>
-    <component>avr_interface.luc</component>
     <component>counter.luc</component>
     <component>spi_peripheral.luc</component>
-    <src top="true">mojo_top.luc</src>
-	<src>lasertrigger.luc</src>
-    <src>analogreader.luc</src>
-    <src>cam_synchro.luc</src>
     <src>servo_standard.luc</src>
     <src>servo_stop.luc</src>
-    <component>uart_tx.luc</component>
+    <src top="true">mojo_top.luc</src>
     <component>cclk_detector.luc</component>
+    <component>uart_rx.luc</component>
+    <component>avr_interface.luc</component>
+    <src>analogreader.luc</src>
+    <component>servo.luc</component>
+    <src>lasertrigger.luc</src>
+    <src>cam_synchro.luc</src>
+    <component>uart_tx.luc</component>
     <constraint lib="true">mojo.ucf</constraint>
     <constraint>user.ucf</constraint>
   </files>

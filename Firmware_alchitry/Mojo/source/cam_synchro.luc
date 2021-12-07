@@ -1,0 +1,28 @@
+module cam_synchro (
+    input clk,  // clock
+    input rst,  // reset
+    input camera,
+    output sync[4]
+  ) {
+
+  .clk(clk){ 
+    .rst(rst) {
+      dff sync_count[4];
+      dff sig_sync[2];
+      dff sig_old;
+  }}
+  
+  always {    
+    sig_sync.d[0] = camera;
+    sig_sync.d[1] = sig_sync.q[0];
+    sig_old.d = sig_sync.q[1];
+    
+    
+    if(sig_old.q == 0 &&  sig_sync.q[1] == 1){
+      sync_count.d = sync_count.q+1;
+    }
+    
+    sync = sync_count.q; 
+    
+  }
+}

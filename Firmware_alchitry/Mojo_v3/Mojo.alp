@@ -15,6 +15,7 @@
     <src>analogreader.luc</src>
     <component>uart_rx.luc</component>
     <component>avr_interface.luc</component>
+    <component>servo.luc</component>
     <src top="true">mojo_top.luc</src>
     <component>uart_tx.luc</component>
     <constraint lib="true">mojo.ucf</constraint>

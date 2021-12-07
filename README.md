@@ -1,4 +1,4 @@
-## :warning: Important: The Mojo FPGA has unfortunately been discontinued. Their successors are based on a slightly different architecture. Please check out [jdeschamps/MicroFPGA](https://github.com/jdeschamps/MicroFPGA) for the new version. :warning:
+## :warning: Important: The Mojo FPGA has unfortunately been discontinued. Their successors are based on a slightly different architecture. Please check out [mufpga/MicroFPGA](https://github.com/mufpga/MicroFPGA) for the new version. :warning:
 
 # MicroMojo
 

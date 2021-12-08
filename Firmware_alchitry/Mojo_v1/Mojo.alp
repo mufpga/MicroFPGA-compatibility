@@ -14,6 +14,7 @@
     <component>uart_rx.luc</component>
     <component>avr_interface.luc</component>
     <src>analogreader.luc</src>
+    <component>servo.luc</component>
     <src>lasertrigger.luc</src>
     <component>uart_tx.luc</component>
     <constraint lib="true">mojo.ucf</constraint>

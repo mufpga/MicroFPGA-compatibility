@@ -46,6 +46,8 @@ module mojo_top (
   const NUM_TTL = 6;
   const NUM_SERVOS = 6;
   
+  const RESOLUTION_SERVO = 17;
+  
   sig rst;  // reset signal
    
   .clk(clk) {
@@ -73,8 +75,8 @@ module mojo_top (
       dff ttl[NUM_TTL];
       
       // servos
-      servo_standard servo_controller[NUM_SERVOS];
-      dff position[NUM_SERVOS][16];
+      servo servo_controller[NUM_SERVOS](#MIN_MAX_DIFF(1000), #RESOLUTION(RESOLUTION_SERVO));
+      dff position[NUM_SERVOS][RESOLUTION_SERVO];
       dff servo_sig_update[NUM_SERVOS];
       servo_stop servo_sig[NUM_SERVOS];// to shut down the servos 10 sec after every movement
       
@@ -134,7 +136,7 @@ module mojo_top (
         } else if (reg.regOut.address < 30+NUM_TTL){           // TTL
           ttl.d[reg.regOut.address-30] = reg.regOut.data[0];
         } else if (reg.regOut.address < 40+NUM_SERVOS){           // Servo
-          position.d[reg.regOut.address-40] = reg.regOut.data[15:0];
+          position.d[reg.regOut.address-40] = reg.regOut.data[RESOLUTION_SERVO-1:0];
           servo_sig_update.d[reg.regOut.address-40] = 1;
         } else if (reg.regOut.address < 50+NUM_PWM){           // PWM
           dutycycle.d[reg.regOut.address-50] = reg.regOut.data[7:0];

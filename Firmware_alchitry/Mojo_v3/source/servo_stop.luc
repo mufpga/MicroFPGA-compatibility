@@ -17,7 +17,7 @@ module servo_stop (
 
   .clk(clk){ 
     .rst(rst) {
-      dff count_sig[30]; // count until ~ 10 sec @ 100MHz
+      dff count_sig[29]; // count until ~ 10 sec @ 50MHz
   }}
   
   always {

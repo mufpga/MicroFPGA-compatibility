@@ -14,7 +14,7 @@ module servo_standard (
     output servo                // servo output
   ) {
   
-  const CLOCK_FREQ = 100000; // Clock frequency (kHz = ms^-1)
+  const CLOCK_FREQ = 50000; // Clock frequency (kHz = ms^-1)
   const MIN_T = 1; // min pulse (ms)  
   const MAX_T = 2; // max pulse (ms)  
   const PERIOD = 20; // period (ms)  

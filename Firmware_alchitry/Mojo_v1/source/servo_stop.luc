@@ -1,5 +1,5 @@
 /******************************************************************************
-   This module takes a servo signal input (PWM) and shuts it down 2,5 seconds 
+   This module takes a servo signal input (PWM) and shuts it down 10 seconds 
    later in order to avoid vibrations on the optical table.
 */
 
@@ -13,7 +13,7 @@ module servo_stop (
 
   .clk(clk){ 
     .rst(rst) {
-      dff count_sig[27]; // count until ~ 2,5 sec @ 50MHz
+      dff count_sig[29]; // count until ~ 10 sec @ 50MHz (compatible with slow servos)
   }}
   
   always {

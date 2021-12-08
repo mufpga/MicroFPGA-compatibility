@@ -13,7 +13,7 @@
    https://mufpga.github.io/ 
    GPL-3.0 License  
 */
-
+ 
 module mojo_top (
    input clk,              // 50MHz clock
     input rst_n,            // reset button (active low)

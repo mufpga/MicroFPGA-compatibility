@@ -6,7 +6,7 @@ MicroMojo is an early iteration of [MicroFPGA](https://mufpga.github.io). It is 
 
 ## Content
 
-This repository contains the Alchitry protects and Micro-Manager device adapters for V1 and v2:
+This repository contains the Alchitry projects and Micro-Manager device adapters for V1 and v2:
 
 - v1: the original MicroMojo, kept here for back compatibility.
 - v3: a version compatible with MicroFPGA, including the newest features such as active camera trigger. 

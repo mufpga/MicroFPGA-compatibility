@@ -25,7 +25,7 @@ module laser_trigger (
     input rst,  // reset
     input cam_sig,
     input mod[3],
-    input dura[20],
+    input dura[16],
     input seq[16],
     input sync[4],
     output lasersignal
@@ -44,7 +44,7 @@ module laser_trigger (
     .rst(rst) {
       dff sig_sync[4];
       dff sig_old;
-      dff count_sig[27];
+      dff count_sig[23];
   }}
   
   always {

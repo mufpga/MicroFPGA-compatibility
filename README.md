@@ -18,7 +18,7 @@ Documentation and tutorials are available on [https://mufpga.github.io/](https:/
 
 ## Content
 
-This repository contains the source related to discontinued boards and versions. It is updated to maintain back-compatibility for laboratory using the old boards. 
+This repository contains the source related to discontinued boards and versions. It is updated to maintain back-compatibility for labs using the old boards. 
 
 - v1 is the original Mojo code.
 - v3 is updated following changes in the main [MicroFPGA repository](https://github.com/mufpga/MicroFPGA).
@@ -36,20 +36,8 @@ Deschamps J, Kieser C, Hoess P, Deguchi T and Ries J,
 
 --->
 
-MicroFPGA-mm was written by Joran Deschamps, EMBL (2020).
+MicroFPGA was written by Joran Deschamps, EMBL (2020).
 
 
 
 
-
-
-
-This repository contains the Alchitry projects and Micro-Manager device adapters for V1 and v2:
-
-- v1: the original MicroMojo, kept here for back compatibility.
-- v3: a version compatible with MicroFPGA, including the newest features such as active camera trigger. 
-
-For more details on how to build and use MicroFPGA or Mojo v3, refer to the [project homepage](https://mufpga.github.io).
-
-
-MicroMojo and MicroFPGA were written by Joran Deschamps, EMBL (2020).
